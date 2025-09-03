@@ -1,6 +1,3 @@
-# Part 2: Integer Negation and Subtraction Using NAND Gates (1 point)
-# Objective:   Implement a function that performs integer negation using only NAND gates and use it to implement subtraction
-
 #!/usr/bin/env python3
 #
 # Please look for "TODO" in the comments, which indicate where you
@@ -34,7 +31,8 @@ def OR(a, b):
     return NAND(NOT(a), NOT(b))
 
 def XOR(a, b):
-    return NAND(NAND(a, NAND(a, b)), NAND(b, NAND(a, b)))
+    c = NAND(a, b)
+    return NAND(NAND(a, c), NAND(b, c))
 
 # We also implemented the half, full, and multi-bit adders:
 
@@ -49,7 +47,7 @@ def full_adder(A, B, Cin):
     Cout = OR(c, C)
     return S, Cout
 
-def multibit_adder(A, B):
+def multibit_adder(A, B, carrybit=False):
     assert(len(A) == len(B))
 
     n = len(A)
@@ -58,7 +56,8 @@ def multibit_adder(A, B):
     for i in range(n):
         s, c = full_adder(A[i], B[i], c)
         S.append(s)
-    S.append(c)  # add the final carry
+    if carrybit:
+        S.append(c)  # add the extra carry bit
     return S
 
 # Now, getting into the assignment, we would like to first implement a
@@ -69,25 +68,25 @@ def multibit_adder(A, B):
 # assigment.
 
 def multibit_negative(A):
-#        """Multi-bit integer negative operator
+#   """Multi-bit integer negative operator
 #   This function take the binary number A and return negative A using
-#    two's complement.
-#    In other words, if the input
-#        A = 3 = 0b011,
-#    then the output is
-#        -A = -3 = 0b101.
-
-#    Args:
-#        A: input number in binary represented as a python list, with
-#           the least significant digit be the first.
-#           That is, the binary 0b011 should be given by [1,1,0].
-
-#    Returns:
-#        Negative A using two's complement represented as a python
-#        list, with the least significant digit be the first.
-
-    
+#   two's complement.
+#   In other words, if the input
+#       A = 3 = 0b011,
+#   then the output is
+#       -A = -3 = 0b101.
+#
+#   Args:
+#       A: input number in binary represented as a python list, with
+#          the least significant digit be the first.
+#          That is, the binary 0b011 should be given by [1,1,0].
+#
+#   Returns:
+#       Negative A using two's complement represented as a python
+#       list, with the least significant digit be the first.
+#   """
 #   TODO: implement the function here
+
     print("Computing -B")
 
     notA, negA = [0] * len(A), [0] * len(A) # need to define Abar before using it, Abar = list filled with zeros
@@ -129,8 +128,8 @@ NUMBEROFBITS = 8
 nA, nB= 4,5
 
 A = [int(a) for a in format(nA, f'0{NUMBEROFBITS}b')]          # generates list for Ap with MSB left, LSB right
-A.reverse() 
+A.reverse()
 B = [int(a) for a in format(nB, f'0{NUMBEROFBITS}b')]          # generates list for Ap with MSB left, LSB right
 B.reverse()                         # order reversed, now LSB left, MSB right as expected by multibit_adder (used in multibit_negative)
 print(f"A={A}, B={B}, multibit_negative(B)={multibit_negative(B)}")
-print(f"multibit_subtractor(A, B)={multibit_subtractor(A, B)}") 
+print(f"multibit_subtractor(A, B)={multibit_subtractor(A, B)}")
