@@ -126,7 +126,7 @@ def multibit_subtractor(A, B):
     return multibit_sub
 
 NUMBEROFBITS = 8
-nA, nB= 3, 5
+nA, nB= 4,5
 
 A = [int(a) for a in format(nA, f'0{NUMBEROFBITS}b')]          # generates list for Ap with MSB left, LSB right
 A.reverse() 
