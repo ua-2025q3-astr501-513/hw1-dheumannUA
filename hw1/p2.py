@@ -93,8 +93,9 @@ def multibit_negative(A):
     for i in range(len(A)):
         notA[i] = NOT(A[i])
     One = [1] + [0] * (len(A) - 1) # One = 1 followed by zeros, e.g., for 8 bits, One = [1,0,0,0,0,0,0,0] for 8 bits
-    negA = multibit_adder(notA, One) # multibit_adder already starts with LSB left, no need to reverse input A
-    negA.pop()  # Remove the last = rightmost element of a list
+    print(f"len(notA)={len(notA)}, len(One)={len(One)}")
+    negA = multibit_adder(notA, One, False) # multibit_adder already starts with LSB left, no need to reverse input A
+    # negA.pop()  # Remove the last = rightmost element of a list
     # print(f"negA after ={negA}")
     return negA
 
@@ -120,16 +121,16 @@ def multibit_subtractor(A, B):
     """
     # TODO: implement the function here
     print("Computing A-B")
-    multibit_sub = multibit_adder(A, multibit_negative(B))
-    multibit_sub.pop()  # Remove the last = rightmost element of a list
+    multibit_sub = multibit_adder(A, multibit_negative(B),False)
+    # multibit_sub.pop()  # Remove the last = rightmost element of a list
     return multibit_sub
 
-NUMBEROFBITS = 8
-nA, nB= 4,5
+# NUMBEROFBITS = 8
+# nA, nB= 3,5
 
-A = [int(a) for a in format(nA, f'0{NUMBEROFBITS}b')]          # generates list for Ap with MSB left, LSB right
-A.reverse()
-B = [int(a) for a in format(nB, f'0{NUMBEROFBITS}b')]          # generates list for Ap with MSB left, LSB right
-B.reverse()                         # order reversed, now LSB left, MSB right as expected by multibit_adder (used in multibit_negative)
-print(f"A={A}, B={B}, multibit_negative(B)={multibit_negative(B)}")
-print(f"multibit_subtractor(A, B)={multibit_subtractor(A, B)}")
+# A = [int(a) for a in format(nA, f'0{NUMBEROFBITS}b')]          # generates list for Ap with MSB left, LSB right
+# A.reverse()
+# B = [int(a) for a in format(nB, f'0{NUMBEROFBITS}b')]          # generates list for Ap with MSB left, LSB right
+# B.reverse()                         # order reversed, now LSB left, MSB right as expected by multibit_adder (used in multibit_negative)
+# print(f"A={A}, B={B}, multibit_negative(B)={multibit_negative(B)}")
+# print(f"multibit_subtractor(A, B)={multibit_subtractor(A, B)}")

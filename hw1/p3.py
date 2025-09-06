@@ -31,6 +31,9 @@
 # to overcome catastrophic cancellation.
 # Please make sure that you take care of all the special cases.
 
+def sign(x):
+    return (x > 0) - (x < 0)
+
 def quadratic(a, b, c):
     """Numerically stable quadratic equation solver
 
@@ -65,3 +68,25 @@ def quadratic(a, b, c):
                 If there is no real root, x1 == x2 == None.
     """
     # TODO: implement the stable quadratic equation solver here
+    print(f"in quadratic: a = {a}  b = {b}  c = {c}, sign(b) = {int(sign(b))}")
+    print(f"1 b^2 - 4ac = {(-b-(b**2 - 4*a*c)**0.5)/(2*a)}")
+    print(f"2 b^2 - 4ac = {(-b - int(sign(b))*(b**2 - 4*a*c)**0.5)/(2*a)}")
+    x1 = (-b - int(sign(b))*(b**2 - 4*a*c)**0.5)/(2*a)
+    print(f"x1 = {x1}")
+    if(c != 0):
+        x2 = c/(a * x1)
+    else:   
+        x2 = -b/a
+    print(f"x2 = {x2}")
+    if(x1.imag != 0):
+        x1 = None
+    if(x2.imag != 0):
+        x2 = None
+    print(f"x1= {x1}, x2 = {x2}")
+    if(x1 == x2):
+        y1 = x1
+        y2 = None
+    else:
+        y1 = min(x1, x2)
+        y2 = max(x1, x2)
+    return y1, y2

@@ -45,10 +45,29 @@ class CoupledOscillators:
             k  (float):              spring constant (assumed identical for all springs).
 
         """
+        print("In CoupledOscillators __init__ routine")
+        print(f"X0 = {X0}")
         # TODO: Construct the stiffness matrix K
+        K=np.zeros((len(X0),len(X0)))
+        for i in range(len(X0)):
+            K[i,i]=2*k/m
+        for i in range(len(X0)-1):
+            K[i,i+1]=-k/m
+            K[i+1,i]=-k/m
+        print(f"K = {K}, K shape={K.shape}")
         # TODO: Solve the eigenvalue problem for K to find normal modes
+        EW, EV = np.linalg.eig(K)
+        print(f"Eigenvalues = {EW}")
         # TODO: Store angular frequencies and eigenvectors
+        self.Omega = np.sqrt(EW)
+        print(f"angular frequencies = {self.Omega}")
+        self.V = EV
+        print("self.V shape=",self.V.shape)
+        print(f"Eigenvectors = {self.V}")
         # TODO: Compute initial modal amplitudes M0 (normal mode decomposition)
+        self.M0 = np.dot(self.V.T, X0) # Self.V.T is the transpose of NxN matrix V, in each column of Self.V is an eigenvector, after transpose, in each row of Self.V.T is an eigenvector, the scalar product of each row of Self.V.T and X0 is the amplitude of each eigenvector in the initial displacement vector X0, the amplitude does not change with time
+        print(f"Initial modal amplitudes = {self.M0}")
+
 
     def __call__(self, t):
         """Calculate the displacements of the oscillators at time t.
@@ -61,7 +80,10 @@ class CoupledOscillators:
 
         """
         # TODO: Reconstruct the displacements from normal modes
-
+        self.M=self.M0*np.cos(self.Omega*t) # M is the modal amplitude at time t
+        X=np.dot(self.V, self.M) # X is the displacement at time t
+        print(f"t={t}, displacements={X}")
+        return X
 
 if __name__ == "__main__":
 

@@ -38,11 +38,21 @@
 
 # TODO: Edit this sample idea.
 
-- topic: Numerical Linear Algebra
-  idea:  Develop a fast matrix multiplication algorithm to reduce
-         energy consumption during deep learning inference.
+- topic: PDE Solvers
+  idea:  Numerical relativity, 3D puncture initial data for one BH
+         (Baumgarte & Shapiro Appendix B, existing program), 
+         implement higher accuracy finite difference method 
 
 # TODO: Add two more project ideas below, following the same format as
 # the example above.
 # Remember to ensure that each idea is distinct and concise, and each
 # "topic" must be one of the listed course topics.
+
+- topic: PDE Solvers
+  idea:  Numerical relativity, 3D puncture initial data for one BH
+         with linear momentum (Baumgarte & Shapiro Appendix B, existing program), 
+         extend to BH with angular momentum 
+
+- topic: PDE Solvers
+  idea:  Numerical relativity, 1D non-linear BSSN gauge evolution for
+         Schwarzschild BH with trumpet slicing (new program)
